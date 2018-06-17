@@ -2,17 +2,30 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+class Letter extends Component {
+  render() {
+    return (
+      <div className="Letter">
+      <p>A</p>
+      <p>S</p>
+      <p>D</p>
+      <p>F</p>
+      <p>G</p>
+      <p>H</p>
+      <p>J</p>
+      <p>K</p>
+      <p>L</p>
+      </div>
+    );
+  }
+}
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <h1>React Drumkit</h1>
+      <Letter />
       </div>
     );
   }
