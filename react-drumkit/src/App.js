@@ -1,14 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
+import styled from 'styled-components';
 
 import clap from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/clap.wav';
 import hihat from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/hihat.wav';
+import kick from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/kick.wav';
+
+const LetterStyle = styled.div`
+  text-align: center;
+  color: rgb(12, 159, 185);
+  display: 'inline-block';
+`;
+
+const ButtonStyle = styled.button`
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
+
+const AppStyle = styled.div`
+  text-align: center;
+`;
 
 class Letter extends Component {
   render() {
     return (
-      <div className="Letter" style={{color: '#FF2121', display: 'inline-block'}}>
+      <LetterStyle>
         <p>A</p>
         <p>S</p>
         <p>D</p>
@@ -18,7 +39,7 @@ class Letter extends Component {
         <p>J</p>
         <p>K</p>
         <p>L</p>
-      </div>
+      </LetterStyle>
     );
   }
 }
@@ -60,14 +81,12 @@ class DrumKit extends Component {
     const { style, bigText, smallText, className } = this.props;
     const isPlaying = this.state.isPlaying ? `${className} isPlaying` : `${className}`;
     return (
-      <button
-        onClick={this._playSound}
-        onTransitionEnd={this._onTransitionEnd}
-        className={isPlaying}
-        style={style}>
+      <ButtonStyle>
+
         <kbd>{smallText}</kbd>
+        <br />
         <span>{bigText}</span>
-      </button>
+      </ButtonStyle>
     );
   }
 }
@@ -83,20 +102,21 @@ DrumKit.propTypes = {
 };
 
 class Home extends Component {
+  
   render() {
     return (
       <div>
-        <div className="one">
+        <div className="drums">
           <DrumKit
             className="drumKit clap"
-            smallText="a"
+            smallText="A"
             bigText="clap"
             code={65}
             source={clap}
           />
           <DrumKit
             className="drumKit hihat"
-            smallText="s"
+            smallText="S"
             bigText="HiHat"
             code={83}
             source={hihat}
@@ -110,11 +130,11 @@ class Home extends Component {
 class App extends Component {
   render() {
     return (
-      <div className="App">
-      <h1>React Drumkit</h1>
-      <Letter />
-      <Home />
-      </div>
+      <AppStyle>
+        <h1>React Drumkit</h1>
+        <Letter />
+        <Home />
+      </AppStyle>
     );
   }
 }
