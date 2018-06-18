@@ -3,7 +3,7 @@
 .jshintrc
 
 # dependencies
-../node_modules
+/Users/louismoselhi/Projects/react-drumkit/react-drumkit/node_modules
 
 # testing
 /coverage
