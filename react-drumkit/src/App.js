@@ -11,8 +11,8 @@ import hihat from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/
 import kick from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/kick.wav';
 
 const Image = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   margin: 2em;
 `;
 
@@ -34,7 +34,6 @@ class Icon extends Component {
     super();
 
     this.state = {
-      isPlaying: false,
       isShaking: false
     };
 
@@ -45,7 +44,7 @@ class Icon extends Component {
   _shake(event) {
     if (event.keyCode === this.props.code || event.type === 'click') {
       this.setState({ isShaking: true });
-
+      this.setState({ isPlaying: true });
     }
   }
 
@@ -64,26 +63,31 @@ class Icon extends Component {
 
   render() {
     const { style, className } = this.props;
-    const isShaking = this.state.isPlaying ? `${className} isShaking` : `${className}`;
+    const isPlaying = this.state.isPlaying ? `${className} isPlaying` : `${className}`;
     return (
       <div>
         <Image 
           code={65}
           src={clapIcon}
-          className="shaking"
+          className="icon clap"
           source={clap}
+          style={style}
+          onTransitionEnd={this._onTransitionEnd}
+          onClick={this._playSound}
         />
         <Image 
           code={83}
           src={hihatIcon}
-          className="shaking"
+          className="icon hihat"
           source={hihat}
+          style={style}
         />
         <Image 
           code={68}
           src={kickIcon}
-          className="shaking"
+          className="icon kick"
           source={kick}
+          style={style}
         />
       </div>
     );
@@ -95,7 +99,7 @@ class DrumKit extends Component {
     super();
 
     this.state = {
-      isPlaying: false,
+      isPlaying: false
     };
 
     this._playSound = this._playSound.bind(this);
@@ -125,9 +129,9 @@ class DrumKit extends Component {
 
   render() {
     const { bigText, smallText, className } = this.props;
-    const isPlaying = this.state.isPlaying ? `${className} isPlaying` : `${className}`;
+    const playing = this.state.isPlaying ? `${className} isPlaying` : `${className}`;
     return (
-      <ButtonStyle>
+      <ButtonStyle className={playing}>
         <kbd>{smallText}</kbd>
         <br />
         <span>{bigText}</span>
@@ -152,7 +156,6 @@ DrumKit.propTypes = {
 };
 
 class Drums extends Component {
-  
   render() {
     return (
       <div>

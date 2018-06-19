@@ -3,9 +3,15 @@
   height: 80px;
 }
 
-.shaking {
+.isShaking {
   animation: shake 0.5s; 
   animation-iteration-count: infinite; 
+}
+
+.isPlaying {
+  transform: scale(1.1);
+  border-color: #ffc600;
+  box-shadow: 0 0 10px #ffc600;
 }
 
 .App-header {
