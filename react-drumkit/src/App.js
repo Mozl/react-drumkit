@@ -10,22 +10,16 @@ import clap from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/s
 import hihat from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/hihat.wav';
 import kick from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/kick.wav';
 
-
-const LetterStyle = styled.div`
-  text-align: center;
-  color: rgb(12, 159, 185);
-  display: 'inline-block';
-`;
-
 const Image = styled.img`
   width: 50px;
   height: 50px;
+  margin: 2em;
 `;
 
 const ButtonStyle = styled.button`
   color: palevioletred;
   font-size: 1em;
-  margin: 1em;
+  margin: 2em;
   padding: 0.25em 1em;
   border: 2px solid palevioletred;
   border-radius: 3px;
@@ -35,12 +29,73 @@ const AppStyle = styled.div`
   text-align: center;
 `;
 
+class Icon extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      isPlaying: false,
+      isShaking: false
+    };
+
+    this._shake = this._shake.bind(this);
+    this._onTransitionEnd = this._onTransitionEnd.bind(this);
+  }
+
+  _shake(event) {
+    if (event.keyCode === this.props.code || event.type === 'click') {
+      this.setState({ isShaking: true });
+
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this._shake);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this._shake);
+  }
+
+  _onTransitionEnd(event) {
+    this.setState({ isPlaying: false });
+    this.setState({ isShaking: false });
+  }
+
+  render() {
+    const { style, className } = this.props;
+    const isShaking = this.state.isPlaying ? `${className} isShaking` : `${className}`;
+    return (
+      <div>
+        <Image 
+          code={65}
+          src={clapIcon}
+          className="shaking"
+          source={clap}
+        />
+        <Image 
+          code={83}
+          src={hihatIcon}
+          className="shaking"
+          source={hihat}
+        />
+        <Image 
+          code={68}
+          src={kickIcon}
+          className="shaking"
+          source={kick}
+        />
+      </div>
+    );
+  }
+}
+
 class DrumKit extends Component {
   constructor() {
     super();
 
     this.state = {
-      isPlaying: false
+      isPlaying: false,
     };
 
     this._playSound = this._playSound.bind(this);
@@ -69,7 +124,7 @@ class DrumKit extends Component {
   }
 
   render() {
-    const { style, bigText, smallText, className } = this.props;
+    const { bigText, smallText, className } = this.props;
     const isPlaying = this.state.isPlaying ? `${className} isPlaying` : `${className}`;
     return (
       <ButtonStyle>
@@ -81,24 +136,26 @@ class DrumKit extends Component {
   }
 }
 
+Icon.propTypes = {
+  className: PropTypes.string,
+  code: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired
+};
 
 DrumKit.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object,
   bigText: PropTypes.string.isRequired,
   smallText: PropTypes.string.isRequired,
   code: PropTypes.number.isRequired,
   source: PropTypes.string.isRequired
 };
 
-class Home extends Component {
+class Drums extends Component {
   
   render() {
     return (
       <div>
-        <Image src={clapIcon} />
-        <Image src={hihatIcon} />
-        <Image src={kickIcon} />
         <div className="drums">
           <DrumKit
             className="drumKit clap"
@@ -132,7 +189,8 @@ class App extends Component {
     return (
       <AppStyle>
         <h1>React Drumkit</h1>
-        <Home />
+        <Icon />
+        <Drums />
       </AppStyle>
     );
   }
