@@ -9,6 +9,9 @@ import kickIcon from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/s
 import clap from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/clap.wav';
 import hihat from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/hihat.wav';
 import kick from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/kick.wav';
+import ride from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/ride.wav';
+import openhat from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/openhat.wav';
+import tink from '/Users/louismoselhi/Projects/react-drumkit/react-drumkit/src/sounds/tink.wav';
 
 const Image = styled.img`
   width: 70px;
@@ -113,6 +116,7 @@ class DrumKit extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this._playSound);
+    this.setState({ isPlaying: false });
   }
 
   _playSound(event) {
@@ -131,7 +135,7 @@ class DrumKit extends Component {
     const { bigText, smallText, className } = this.props;
     const playing = this.state.isPlaying ? `${className} isPlaying` : `${className}`;
     return (
-      <ButtonStyle className={playing}>
+      <ButtonStyle className={playing} onTransitionEnd={this._onTransitionEnd}>
         <kbd>{smallText}</kbd>
         <br />
         <span>{bigText}</span>
@@ -180,6 +184,28 @@ class Drums extends Component {
             bigText="Kick"
             code={68}
             source={kick}
+          />
+          <br />
+          <DrumKit
+            className="drumKit ride"
+            smallText="F"
+            bigText="Ride"
+            code={70}
+            source={ride}
+          />
+          <DrumKit
+            className="drumKit openhat"
+            smallText="G"
+            bigText="Openhat"
+            code={71}
+            source={openhat}
+          />
+          <DrumKit
+            className="drumKit tink"
+            smallText="H"
+            bigText="Tink"
+            code={72}
+            source={tink}
           />
         </div>
       </div>
