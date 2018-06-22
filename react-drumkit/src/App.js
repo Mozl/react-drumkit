@@ -19,7 +19,7 @@ const Image = styled.img`
   margin: 2em;
 `;
 
-const ButtonStyle = styled.button`
+const Button = styled.button`
   color: palevioletred;
   font-size: 1em;
   margin: 2em;
@@ -106,7 +106,7 @@ class DrumKit extends Component {
     };
 
     this._playSound = this._playSound.bind(this);
-    this._onTransitionEnd = this._onTransitionEnd.bind(this);
+    // this._onTransitionEnd = this._onTransitionEnd.bind(this);
   }
 
   componentDidMount() {
@@ -115,8 +115,7 @@ class DrumKit extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this._playSound);
-    this.setState({ isPlaying: false });
+    window.removeEventListener('keyup', this._playSound);
   }
 
   _playSound(event) {
@@ -127,19 +126,19 @@ class DrumKit extends Component {
     }
   }
 
-  _onTransitionEnd(event) {
-    this.setState({ isPlaying: false });
-  }
+  // _onTransitionEnd(event) {
+  //   this.setState({ isPlaying: false });
+  // }
 
   render() {
     const { bigText, smallText, className } = this.props;
-    const playing = this.state.isPlaying ? `${className} isPlaying` : `${className}`;
+    const playing = this.state.isPlaying ? `${className} isPlaying` : `${this._onTransitionEnd}`;
     return (
-      <ButtonStyle className={playing} onTransitionEnd={this._onTransitionEnd}>
+      <Button className={playing} onClick={this._playSound}>
         <kbd>{smallText}</kbd>
         <br />
         <span>{bigText}</span>
-      </ButtonStyle>
+      </Button>
     );
   }
 }
